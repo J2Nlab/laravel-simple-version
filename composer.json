@@ -1,0 +1,35 @@
+{
+    "name": "j2nlab/laravel-simple-version",
+    "description": "Manage easily your Laravel app version",
+    "type": "library",
+    "keywords": [ "laravel", "version", "versioning" ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "J2Nlab",
+            "email": "dev@j2nlab.com"
+        }
+    ],
+    "require": {
+        "php": ">=7.2",
+        "illuminate/console": "^6.0|^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "J2Nlab\\SimpleVersion\\": "src/"
+        },
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "J2Nlab\\SimpleVersion\\ServiceProvider"
+            ]
+        }
+    }
+}
