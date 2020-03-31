@@ -59,7 +59,7 @@ class ServiceProvider extends SP
     public function register()
     {
         /* Register Artisan commands */
-		foreach ($this->allCommands as $command => $class) {
+        foreach ($this->allCommands as $command => $class) {
             $this->app->singleton($command, function () use ($class) {
                 return new $class();
             });

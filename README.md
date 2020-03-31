@@ -36,13 +36,15 @@ return array (
 );
 ```
 
-If build is `false`, this number is ignored; else is incremented and never return to 0. If you want a build number, set to 0.
+If build is `false`, then this number is ignored; else it's incremented and never reset to 0.
+If you want a build number, set to any value (0 or 1, for example).
 
-If commit is `false`, this number is ignorer; else get the 6 first digit of the last local commit. If you want a commit number, set to 0.
+If commit is `false`, this number is ignored; else get the 6 firsts digits of the last local commit.
+If you want a commit number, set to (0 or 1, for example).
 
 ## Artisan commands
 
-Available for all of them:
+All available commands are:
 
 ``` bash
 $ php artisan version         
@@ -55,7 +57,7 @@ $ php artisan version:commit
 
 ### php artisan version
 
-Display version number, different way avaible with helpers and Blade directive.
+Display version number, in different ways available with helpers and Blade directive, currently 'full' and 'compact' (the default).
 
 ``` bash
 $ php artisan version    
@@ -81,7 +83,7 @@ Version (full): version 1.1.1
 
 ### php artisan version:commit
 
-If the commit value on `config/version.php` is not `false`, get the 6 first digits of the last git local commit.
+If the commit value on `config/version.php` is not `false`, get the 6 firsts digits of the last git local commit.
 
 ``` bash
 $ php artisan version:commit
@@ -98,7 +100,8 @@ No commit number!
 
 ### php artisan version:build
 
-If the build value on `config/version.php` is not `false`, increment build number. This number is never eseted to 0.
+If the build value on `config/version.php` is not `false`, increment build number.
+This number is never reseted to 0.
 
 ``` bash
 $ php artisan version:build
@@ -119,13 +122,13 @@ Increment app patch number version.
 
 ``` bash
 $ php artisan version:patch
-New major version: 3
-New version: 1.1.3-12-db5a4a
+New major version: 2
+New version: 1.1.2-12-db5a4a
 ```
 
 ### php artisan version:minor
 
-Increment app minor number version, and reset to 0 patch numbers.
+Increment app minor number version, and reset to 0 patch number.
 
 ``` bash
 $ php artisan version:minor
@@ -152,8 +155,8 @@ It's really simple:
  - `'patch' => 0,`      is incremented by `version:patch`, reset to 0 by `version:major`/`minor`
  - `'build' => 0,`      is incremented by `version:build`
  - `'build' => false,`  is never incremented
- - `'commit' => 0,`     is set with 6 first digits of last git commit by `version:commit`
- - `'commit' => false,` is never set
+ - `'commit' => 0,`     is set with 6 firsts digits of last git commit by `version:commit`
+ - `'commit' => false,` is never get
 
 ## Helper
 
@@ -195,5 +198,4 @@ $ composer test
 
 ## License
 
-This package is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details
-
+This package is licensed under the MIT License - see the [LICENSE](LICENSE.md) file for details.
