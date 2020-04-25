@@ -53,14 +53,14 @@ $ php artisan version:minor
 $ php artisan version:patch   
 $ php artisan version:build   
 $ php artisan version:commit  
-``` 
+```
 
 ### php artisan version
 
 Display version number, in different ways available with helpers and Blade directive, currently 'full' and 'compact' (the default).
 
 ``` bash
-$ php artisan version    
+$ php artisan version
 Version (compact): 1.1.1-11-f44744
 Version (full): version 1.1.1 (build: 11) (commit: f44744)
 ```
@@ -68,17 +68,25 @@ Version (full): version 1.1.1 (build: 11) (commit: f44744)
 If build value is `false`.
 
 ``` bash
-$ php artisan version    
+$ php artisan version
 Version (compact): 1.1.1-f44744
 Version (full): version 1.1.1 (commit: f44744)
 ```
 
 If build and commit values are `false`.
- 
+
 ``` bash
-$ php artisan version    
+$ php artisan version
 Version (compact): 1.1.1
 Version (full): version 1.1.1
+```
+
+If patch and build value are `false`.
+
+``` bash
+$ php artisan version
+Version (compact): 1.1-f44744
+Version (full): version 1.1 (commit: f44744)
 ```
 
 ### php artisan version:commit
@@ -118,12 +126,19 @@ No build number!
 
 ### php artisan version:patch
 
-Increment app patch number version.
+If the patch value on `config/version.php` is not `false`, increment app patch number.
 
 ``` bash
 $ php artisan version:patch
 New major version: 2
 New version: 1.1.2-12-db5a4a
+```
+
+Of, if patch value is `false`.
+
+``` bash
+$ php artisan version:patch
+No patch number!
 ```
 
 ### php artisan version:minor
@@ -190,7 +205,7 @@ Or you can choose the format:
 
 ## Testing
 
-Coming soon...
+You can run some PHPunit tests with the following command:
 
 ``` bash
 $ composer test

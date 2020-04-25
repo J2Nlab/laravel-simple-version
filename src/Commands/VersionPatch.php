@@ -26,13 +26,18 @@ class VersionPatch extends Version
     public function handle()
     {
         $current = config('version.patch');
-        $number = $current + 1;
-        $this->info("New patch version: {$number}");
 
-        config([ 'version.patch' => $number ]);
-        $this->save();
+        if ($current === false) {
+            $this->info("No patch number!");
+        } else {
+            $number = $current + 1;
+            $this->info("New patch version: {$number}");
 
-        $this->info("New version: ".version('compact'));
+            config([ 'version.patch' => $number ]);
+            $this->save();
+
+            $this->info("New version: ".version('compact'));
+        }
     }
 }
 // vim: tabstop=4 shiftwidth=4 expandtab
