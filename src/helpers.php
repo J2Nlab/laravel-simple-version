@@ -10,21 +10,6 @@ if (!function_exists('version')) {
     function version($format = 'compact')
     {
         switch ($format) {
-            case 'compact':
-                $version = 
-                    config('version.major').'.'.config('version.minor');
-
-                if (config('version.patch') !== false) {
-                    $version .= '.'.config('version.patch');
-                }
-                if (config('version.build') !== false) {
-                    $version .= '-'.config('version.build');
-                }
-                if (config('version.commit') !== false) {
-                    $version .= '-'.config('version.commit');
-                }
-                break;
-
             case 'full':
                 $version = 'version ' .
                     config('version.major').'.'.config('version.minor');
@@ -37,6 +22,22 @@ if (!function_exists('version')) {
                 }
                 if (config('version.commit') !== false) {
                     $version .= ' (commit: '.config('version.commit').')';
+                }
+                break;
+
+            case 'compact':
+            default:
+                $version =
+                    config('version.major').'.'.config('version.minor');
+
+                if (config('version.patch') !== false) {
+                    $version .= '.'.config('version.patch');
+                }
+                if (config('version.build') !== false) {
+                    $version .= '-'.config('version.build');
+                }
+                if (config('version.commit') !== false) {
+                    $version .= '-'.config('version.commit');
                 }
                 break;
         }

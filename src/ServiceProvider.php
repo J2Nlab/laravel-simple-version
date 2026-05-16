@@ -58,6 +58,8 @@ class ServiceProvider extends SP
      */
     public function register()
     {
+        $this->mergeConfigFrom(__DIR__.'/../config/version.php', 'version');
+
         /* Register Artisan commands */
         foreach ($this->allCommands as $command => $class) {
             $this->app->singleton($command, function () use ($class) {

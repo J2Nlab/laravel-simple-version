@@ -100,6 +100,9 @@ class VersionTest extends VersionTestCase
 
         $result = version('full');
         $this->assertEquals("version 0.0.0", $result);
+
+        $result = version('bogus');
+        $this->assertEquals("0.0.0", $result);
     }
 
     public function testBladeVersion()

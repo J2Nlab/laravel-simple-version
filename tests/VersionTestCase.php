@@ -9,12 +9,12 @@ abstract class VersionTestCase extends TestCase
 {
     protected function getPackageProviders($app)
     {
-        copy(
-            __DIR__.'/../config/version.php',
-            config_path('version.php')
-        );
-
         return [VersionServiceProvider::class];
+    }
+
+    protected function defineEnvironment($app)
+    {
+        $app['config']->set('version', require __DIR__.'/../config/version.php');
     }
 }
 // vim: tabstop=4 shiftwidth=4 expandtab
