@@ -113,6 +113,17 @@ class VersionTest extends VersionTestCase
         );
     }
 
+    public function testExecuteCommandVersionCommit()
+    {
+        config([ 'version.commit' => '0' ]);
+        $exitCode = Artisan::call('version:commit');
+        $this->assertEquals(0, $exitCode);
+        $this->assertMatchesRegularExpression(
+            "/^New commit number: [0-9a-f]{6}\nNew version: 0\\.0\\.0-[0-9a-f]{6}\n$/",
+            Artisan::output()
+        );
+    }
+
     public function testHelperFunction()
     {
 

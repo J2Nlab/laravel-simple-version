@@ -3,6 +3,8 @@
 namespace J2Nlab\SimpleVersion\Commands;
 
 use Illuminate\Console\Command;
+use Symfony\Component\Process\Exception\ExceptionInterface;
+use Symfony\Component\Process\Process;
 
 class VersionCommit extends Version
 {
@@ -28,15 +30,36 @@ class VersionCommit extends Version
         $current = config('version.commit');
         if ($current === false) {
             $this->info("No commit number!");
-        } else {
-            $number = exec('git rev-parse --verify HEAD | cut -c-6');
-            $this->info("New commit number: {$number}");
-
-            config([ 'version.commit' => $number ]);
-            $this->save();
-
-            $this->info("New version: ".version('compact'));
+            return Command::SUCCESS;
         }
+
+        $process = new Process(['git', 'rev-parse', '--verify', 'HEAD']);
+        try {
+            $process->run();
+        } catch (ExceptionInterface $e) {
+            $this->error("Cannot run git: {$e->getMessage()}");
+            return Command::FAILURE;
+        }
+
+        if (!$process->isSuccessful()) {
+            $this->error("git rev-parse failed: ".trim($process->getErrorOutput()));
+            return Command::FAILURE;
+        }
+
+        $number = substr(trim($process->getOutput()), 0, 6);
+        if ($number === '') {
+            $this->error("git returned an empty commit hash");
+            return Command::FAILURE;
+        }
+
+        $this->info("New commit number: {$number}");
+
+        config([ 'version.commit' => $number ]);
+        $this->save();
+
+        $this->info("New version: ".version('compact'));
+
+        return Command::SUCCESS;
     }
 }
 // vim: tabstop=4 shiftwidth=4 expandtab
