@@ -1,6 +1,9 @@
 # Laravel-Simple-Version
 ### Manage easily your Laravel app version
 
+> Requires PHP 8.1+ and Laravel 10, 11 or 12.
+> For Laravel 6, 7 or 8, use version [1.2](https://github.com/J2Nlab/laravel-simple-version/tree/v1.2).
+
 ## Description
 
 With this package, you can:
@@ -39,8 +42,8 @@ return array (
 If build is `false`, then this number is ignored; else it's incremented and never reset to 0.
 If you want a build number, set to any value (0 or 1, for example).
 
-If commit is `false`, this number is ignored; else get the 6 firsts digits of the last local commit.
-If you want a commit number, set to (0 or 1, for example).
+If commit is `false`, this number is ignored; else get the first 6 digits of the last local commit.
+If you want a commit number, set it to any value (0 or 1, for example).
 
 ## Artisan commands
 
@@ -65,7 +68,7 @@ Version (compact): 1.1.1-11-f44744
 Version (full): version 1.1.1 (build: 11) (commit: f44744)
 ```
 
-If build value is `false`.
+Or, if build value is `false`.
 
 ``` bash
 $ php artisan version
@@ -73,7 +76,7 @@ Version (compact): 1.1.1-f44744
 Version (full): version 1.1.1 (commit: f44744)
 ```
 
-If build and commit values are `false`.
+Or, if build and commit values are `false`.
 
 ``` bash
 $ php artisan version
@@ -81,7 +84,7 @@ Version (compact): 1.1.1
 Version (full): version 1.1.1
 ```
 
-If patch and build value are `false`.
+Or, if patch and build values are `false`.
 
 ``` bash
 $ php artisan version
@@ -91,7 +94,7 @@ Version (full): version 1.1 (commit: f44744)
 
 ### php artisan version:commit
 
-If the commit value on `config/version.php` is not `false`, get the 6 firsts digits of the last git local commit.
+If the commit value on `config/version.php` is not `false`, get the first 6 digits of the last git local commit.
 
 ``` bash
 $ php artisan version:commit
@@ -99,7 +102,7 @@ New commit number: db5a4a
 New version: 1.1.1-9-db5a4a
 ```
 
-Of, if commit value is `false`.
+Or, if commit value is `false`.
 
 ``` bash
 $ php artisan version:commit
@@ -109,7 +112,7 @@ No commit number!
 ### php artisan version:build
 
 If the build value on `config/version.php` is not `false`, increment build number.
-This number is never reseted to 0.
+This number is never reset to 0.
 
 ``` bash
 $ php artisan version:build
@@ -117,7 +120,7 @@ New build number: 12
 New version: 1.1.1-12-db5a4a
 ```
 
-Of, if build value is `false`.
+Or, if build value is `false`.
 
 ``` bash
 $ php artisan version:build
@@ -130,11 +133,11 @@ If the patch value on `config/version.php` is not `false`, increment app patch n
 
 ``` bash
 $ php artisan version:patch
-New major version: 2
+New patch version: 2
 New version: 1.1.2-12-db5a4a
 ```
 
-Of, if patch value is `false`.
+Or, if patch value is `false`.
 
 ``` bash
 $ php artisan version:patch
@@ -143,7 +146,7 @@ No patch number!
 
 ### php artisan version:minor
 
-Increment app minor number version, and reset to 0 patch number.
+Increment app minor number version. The patch number is reset to 0, unless it has been disabled (`false`), in which case it stays disabled.
 
 ``` bash
 $ php artisan version:minor
@@ -153,7 +156,7 @@ New version: 1.2.0-12-db5a4a
 
 ### php artisan version:major
 
-Increment app major number version, and reset to 0 minor and patch numbers.
+Increment app major number version. The minor number is reset to 0, and the patch number is reset to 0 unless it has been disabled (`false`).
 
 ``` bash
 $ php artisan version:major
@@ -168,10 +171,11 @@ It's really simple:
  - `'major' => 0,`      is incremented by `version:major`
  - `'minor' => 0,`      is incremented by `version:minor`, reset to 0 by `version:major`
  - `'patch' => 0,`      is incremented by `version:patch`, reset to 0 by `version:major`/`minor`
+ - `'patch' => false,`  is never incremented, and stays `false` on `version:major`/`minor`
  - `'build' => 0,`      is incremented by `version:build`
  - `'build' => false,`  is never incremented
- - `'commit' => 0,`     is set with 6 firsts digits of last git commit by `version:commit`
- - `'commit' => false,` is never get
+ - `'commit' => 0,`     is set with first 6 digits of last git commit by `version:commit`
+ - `'commit' => false,` is never fetched
 
 ## Helper
 
@@ -187,6 +191,8 @@ Or you can choose the format:
 $version = version('compact');
 $version = version('full');
 ```
+
+Any unknown format falls back to `compact`.
 
 ## Blade directive
 
