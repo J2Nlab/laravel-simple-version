@@ -58,6 +58,30 @@ class VersionTest extends VersionTestCase
         );
     }
 
+    public function testExecuteCommandVersionMajorPreservesPatchFalse()
+    {
+        config([ 'version.patch' => false ]);
+        $exitCode = Artisan::call('version:major');
+        $this->assertEquals(0, $exitCode);
+        $this->assertEquals(
+            "New major version: 1\nNew version: 1.0\n",
+            Artisan::output()
+        );
+        $this->assertFalse(config('version.patch'));
+    }
+
+    public function testExecuteCommandVersionMinorPreservesPatchFalse()
+    {
+        config([ 'version.patch' => false ]);
+        $exitCode = Artisan::call('version:minor');
+        $this->assertEquals(0, $exitCode);
+        $this->assertEquals(
+            "New minor version: 1\nNew version: 0.1\n",
+            Artisan::output()
+        );
+        $this->assertFalse(config('version.patch'));
+    }
+
     public function testExecuteCommandVersionBuildFalse()
     {
         $exitCode = Artisan::call('version:build');

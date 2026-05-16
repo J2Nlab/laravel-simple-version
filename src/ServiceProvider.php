@@ -15,13 +15,6 @@ use J2Nlab\SimpleVersion\Commands\VersionCommit;
 class ServiceProvider extends SP
 {
     /**
-     * Indicates if loading of the provider is deferred.
-     *
-     * @var bool
-     */
-    protected $defer = false;
-
-    /**
      * All console commands.
      *
      * @var array

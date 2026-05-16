@@ -31,7 +31,9 @@ class VersionMajor extends Version
 
         config([ 'version.major' => $number ]);
         config([ 'version.minor' => 0 ]);
-        config([ 'version.patch' => 0 ]);
+        if (config('version.patch') !== false) {
+            config([ 'version.patch' => 0 ]);
+        }
         $this->save();
 
         $this->info("New version: ".version('compact'));
